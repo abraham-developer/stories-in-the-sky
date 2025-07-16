@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Sparkles, Star, BookOpen, RotateCcw } from 'lucide-react';
 
 interface StarPoint {
@@ -92,10 +92,9 @@ const StoriesInTheSky: React.FC = () => {
     );
 
     const aspectRatio = Math.max(...stars.map(s => s.x)) - Math.min(...stars.map(s => s.x));
-    const height = Math.max(...stars.map(s => s.y)) - Math.min(...stars.map(s => s.y));
-    
+   
     // Generate constellation name and story based on pattern
-    const constellationData = generateConstellation(stars.length, spread, aspectRatio, height, centerX, centerY);
+    const constellationData = generateConstellation(stars.length, spread, aspectRatio);
     
     setTimeout(() => {
       setConstellation(constellationData);
@@ -103,7 +102,7 @@ const StoriesInTheSky: React.FC = () => {
     }, 2000);
   };
 
-  const generateConstellation = (numStars: number, spread: number, width: number, height: number, centerX: number, centerY: number): Constellation => {
+  const generateConstellation = (numStars: number, width: number, height: number, ): Constellation => {
     const patterns = [
       // Based on star count and geometry
       { min: 3, max: 4, narrow: true, names: ['El Puente Colgante', 'La Escalera Celestial', 'El Triángulo Mágico'] },
@@ -114,6 +113,7 @@ const StoriesInTheSky: React.FC = () => {
       { min: 7, max: 10, narrow: false, names: ['La Flor Gigante', 'El Castillo Flotante', 'La Telaraña Dorada'] },
       { min: 11, max: 20, narrow: true, names: ['La Galaxia Perdida', 'El Bosque Eterno', 'La Caravana Estelar'] },
       { min: 11, max: 20, narrow: false, names: ['El Océano Celestial', 'La Ciudad de Cristal', 'El Laberinto Cósmico'] }
+      
     ];
 
     const isNarrow = width > height * 1.5;
